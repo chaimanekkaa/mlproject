@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <!-- رابط مكتبة Bootstrap للتصميم -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7f6; /* لون خلفية مريح للعين */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .btn-predict {
+            width: 100%;
+            background-color: #4a90e2;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        .btn-predict:hover {
+            background-color: #357abd;
+        }
+        .result-box {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f4fd;
+            border-left: 5px solid #4a90e2;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #1a5276;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+           <h2 class="form-title">🎓 Exam Performance Predictor</h2>
+           
+           <form action="{{ url_for('predict_datapoint')}}" method="post">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Gender</label>
+                <select class="form-select" name="gender" required>
+                    <option class="placeholder" selected disabled value="">Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Race or Ethnicity</label>
+                <select class="form-select" name="ethnicity" required>
+                    <option class="placeholder" selected disabled value="">Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Parental Level of Education</label>
+                <select class="form-select" name="parental_level_of_education" required>
+                    <option class="placeholder" selected disabled value="">Select Parent Education</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="high school">High School</option>
+                    <option value="master's degree">Master's Degree</option>
+                    <option value="some college">Some College</option>
+                    <option value="some high school">Some High School</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Lunch Type</label>
+                <select class="form-select" name="lunch" required>
+                    <option class="placeholder" selected disabled value="">Select Lunch Type</option>
+                    <option value="free/reduced">Free/Reduced</option>
+                    <option value="standard">Standard</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Test Preparation Course</label>
+                <select class="form-select" name="test_preparation_course" required>
+                    <option class="placeholder" selected disabled value="">Select Test Course</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Reading Score (0-100)</label>
+                    <input class="form-control" type="number" name="reading_score" placeholder="Ex: 85" min="0" max="100" required />
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Writing Score (0-100)</label>
+                    <input class="form-control" type="number" name="writing_score" placeholder="Ex: 90" min="0" max="100" required />
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <input class="btn btn-primary btn-predict fw-bold" type="submit" value="Predict Maths Score" />
+            </div>
+        </form>
+        
+        <!-- إظهار النتيجة فقط إذا تم حسابها -->
+        {% if results is defined %}
+        <div class="result-box">
+           <strong>Predicted Score:</strong> {{ results }}
+        </div>
+        {% endif %}
+        
+        </div>
+    </div>
+</body>
+</html>
